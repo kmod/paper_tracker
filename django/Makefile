@@ -2,6 +2,8 @@ RUN_DEPS := dev_env
 run: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py runserver
 
+makemigrations: $(RUN_DEPS)
+	dev_env/bin/python paper_tracker/manage.py makemigrations papers
 migrate: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py migrate
 
