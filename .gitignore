@@ -90,3 +90,4 @@ ENV/
 
 
 dev_env
+db.sqlite3
