@@ -1,8 +1,9 @@
 RUN_DEPS := dev_env
-dbg: $(RUN_DEPS)
-	true
 run: $(RUN_DEPS)
-	true
+	dev_env/bin/python paper_tracker/manage.py runserver
+
+migrate: $(RUN_DEPS)
+	dev_env/bin/python paper_tracker/manage.py migrate
 
 dev_env/timestamp: requirements.txt
 	virtualenv dev_env -p python3
