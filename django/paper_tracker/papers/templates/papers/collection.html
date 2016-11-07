@@ -4,18 +4,31 @@
 <table>
     <tr>
         <th>Paper</th>
+        <th>PDF</th>
         <th>Priority</th>
         <th>% Read</th>
+        <th>Notes</th>
+        <th></th>
     </tr>
 
-    {% for paper in collection.papers.all %}
+    {% for memb in collection.collectionpapers_set.all %}
     <tr>
-        <td><a href="/paper/{{ paper.id }}/">{{ paper.title }}</a> </td>
-        <td>{{ paper.priority }} </td>
-        <td>{{ paper.read }} </td>
+        <td>{{ memb.paper.title }}</td>
+        <td>
+            {% if memb.paper.pdf_url %}
+                <a href="{{memb.paper.pdf_url}}">PDF</a>
+            {% else %}
+                <a href="/paper/{{ memb.paper.pk }}/find_pdf">Find</a>
+            {% endif %}
+        </td>
+        <td>{{ memb.priority }} </td>
+        <td>{{ memb.read }} </td>
+        <td>{{ memb.notes }} </td>
     </tr>
     {% endfor %}
 </table>
 {% else %}
     <p>No papers added to this collection yet.</p>
 {% endif %}
+
+<a href="/paper/new?add_to={{ collection.pk }}">Add new paper</a>
