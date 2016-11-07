@@ -4,7 +4,7 @@ run: $(RUN_DEPS)
 
 shell: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py shell
-makemigrations: $(RUN_DEPS)
+makemigrate makemigration makemigrations: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py makemigrations papers
 migrate: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py migrate
