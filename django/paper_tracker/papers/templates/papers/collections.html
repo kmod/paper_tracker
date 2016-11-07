@@ -1,0 +1,9 @@
+{% if collections %}
+    <ul>
+    {% for collection in collections %}
+        <li><a href="/collection/{{ collection.id }}/">{{ collection.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No collections are available.</p>
+{% endif %}

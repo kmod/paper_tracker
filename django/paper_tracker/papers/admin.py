@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Paper
+from . import models
+
+import django.db.models
 
 # Register your models here.
-admin.site.register(Paper)
+
+for k, v in models.__dict__.items():
+    if isinstance(v, type) and issubclass(v, django.db.models.Model):
+        admin.site.register(v)

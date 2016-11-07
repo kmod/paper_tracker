@@ -1,0 +1,11 @@
+{{ collection }}
+
+{% if collection.papers.all %}
+    <ul>
+    {% for paper in collection.papers.all %}
+        <li><a href="/paper/{{ paper.id }}/">{{ paper.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No collections are available.</p>
+{% endif %}
