@@ -1,6 +1,11 @@
 <form method="post">
 {% csrf_token %}
-<label for="Title">Title:</label><input type="text" name="Title" size="64" />
-<br/>
+<label for="Title">Title:</label><input type="text" name="Title" size="64" id=title /> <br/>
+<label for="Priority">Priority:</label><input type="text" name="Priority" value=1 /> <br/>
 <input type="submit" value="Create" />
 </form>
+
+<script type="text/javascript">
+document.getElementById("title").focus();
+</script>
+

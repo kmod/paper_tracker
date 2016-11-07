@@ -13,6 +13,7 @@ def cpaper(request, collection_id, paper_id):
         memb.paper.title = request.POST['title']
         memb.paper.pdf_url = request.POST['pdf_url']
         memb.notes = request.POST['notes']
+        memb.priority = int(request.POST['priority'])
         memb.save()
         memb.paper.save()
         return redirect(urllib.parse.unquote(request.GET['back']))
@@ -67,9 +68,14 @@ def collections_index(request):
 
 def collection(request, collection_id):
     c = get_object_or_404(Collection, pk=collection_id)
+    def key(memb):
+        return (-memb.read / 30, -memb.priority, memb.paper.title)
+    membs = sorted(c.collectionpapers_set.all(), key=key)
+
     context = {
         'collection': c,
         'back_url': urllib.parse.quote(request.get_full_path()),
+        'members': membs
     }
     return render(request, "papers/collection.html", context)
 
@@ -77,6 +83,7 @@ def paper_new(request):
     if request.method == "POST":
         assert request.POST["Title"]
         p = Paper(title=request.POST['Title'])
+        p.priority = int(request.POST['Priority'])
         p.save()
 
         add_to = int(request.GET['add_to'])
