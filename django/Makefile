@@ -1,6 +1,15 @@
-RUN_DEPS := dev_env
+RUN_DEPS := dev_env paper_tracker/db.sqlite3
 run: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py runserver
+
+.PHONY: dump
+dump: db_dump.sql
+db_dump.sql: paper_tracker/db.sqlite3
+	sqlite3 paper_tracker/db.sqlite3 ".output $@" ".dump"
+
+
+db.sqlite3: db_dump.sql
+	false
 
 shell: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py shell
@@ -8,7 +17,7 @@ makemigrate makemigration makemigrations: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py makemigrations papers
 migrate: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py migrate
-admin_user: $(RUN_DEPS)
+superuser adminuser admin_user user: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py createsuperuser
 
 dev_env/timestamp: requirements.txt

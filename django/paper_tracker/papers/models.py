@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Paper(models.Model):
     title = models.CharField(max_length=255)
+    pdf_url = models.TextField(default="", blank=True)
 
     def __str__(self):
         return "Paper %d: %s" % (self.pk, self.title)
@@ -20,5 +21,5 @@ class CollectionPapers(models.Model):
     collection = models.ForeignKey(Collection)
 
     priority = models.IntegerField(default=1)
-    read = models.IntegerField(default=1)
-    notes = models.CharField(max_length=255)
+    read = models.IntegerField(default=0)
+    notes = models.TextField(default="", blank=True)

@@ -1,11 +1,21 @@
 {{ collection }}
 
 {% if collection.papers.all %}
-    <ul>
+<table>
+    <tr>
+        <th>Paper</th>
+        <th>Priority</th>
+        <th>% Read</th>
+    </tr>
+
     {% for paper in collection.papers.all %}
-        <li><a href="/paper/{{ paper.id }}/">{{ paper.title }}</a></li>
+    <tr>
+        <td><a href="/paper/{{ paper.id }}/">{{ paper.title }}</a> </td>
+        <td>{{ paper.priority }} </td>
+        <td>{{ paper.read }} </td>
+    </tr>
     {% endfor %}
-    </ul>
+</table>
 {% else %}
-    <p>No collections are available.</p>
+    <p>No papers added to this collection yet.</p>
 {% endif %}
