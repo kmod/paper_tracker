@@ -91,3 +91,5 @@ ENV/
 
 dev_env
 db.sqlite3
+*.sqlite3_backup
+*_timestamp

@@ -1,15 +1,18 @@
-RUN_DEPS := dev_env paper_tracker/db.sqlite3
+RUN_DEPS := dev_env paper_tracker/db_timestamp
 run: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py runserver
 
 .PHONY: dump
-dump: db_dump.sql
-db_dump.sql: paper_tracker/db.sqlite3
-	sqlite3 paper_tracker/db.sqlite3 ".output $@" ".dump"
+# dump: db_dump.sql
+# db_dump.sql: paper_tracker/db.sqlite3
+dump:
+	sqlite3 paper_tracker/db.sqlite3 ".output db_dump.sql" ".dump"
 
 
-db.sqlite3: db_dump.sql
-	false
+paper_tracker/db_timestamp: db_dump.sql
+	mv paper_tracker/db.sqlite3 paper_tracker/db.sqlite3_backup
+	sqlite3 paper_tracker/db.sqlite3 < db_dump.sql
+	touch paper_tracker/db_timestamp
 
 shell: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py shell
