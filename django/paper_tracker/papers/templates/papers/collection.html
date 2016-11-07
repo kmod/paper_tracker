@@ -7,8 +7,8 @@
         <th>PDF</th>
         <th>Priority</th>
         <th>% Read</th>
-        <th>Notes</th>
         <th></th>
+        <th>Notes</th>
     </tr>
 
     {% for memb in collection.collectionpapers_set.all %}
@@ -18,11 +18,14 @@
             {% if memb.paper.pdf_url %}
                 <a href="{{memb.paper.pdf_url}}">PDF</a>
             {% else %}
-                <a href="/paper/{{ memb.paper.pk }}/find_pdf">Find</a>
+            <a href="/paper/{{ memb.paper.pk }}/find_pdf?back={{ back_url }}">Find</a>
             {% endif %}
         </td>
         <td>{{ memb.priority }} </td>
         <td>{{ memb.read }} </td>
+        <td>
+            <a href="/collection/{{collection.pk}}/edit/{{memb.paper.pk}}?back={{ back_url }}">edit</a>
+        </td>
         <td>{{ memb.notes }} </td>
     </tr>
     {% endfor %}

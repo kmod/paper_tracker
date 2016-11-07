@@ -1,0 +1,16 @@
+<form method="post">
+{% csrf_token %}
+<label for="title">Title:</label><input type="text" name="title" size="64" value="{{memb.paper.title}}"></input> <br/>
+<label for="pdf_url">PDF:</label><input type="text" name="pdf_url" size="64" value="{{memb.paper.pdf_url}}"/> <br/>
+<label for="priority">Priority:</label><input type="text" name="priority" value="{{memb.priority}}"/> <br/>
+<label for="read">% Read:</label><input type="text" name="read" value="{{memb.read}}"/> <br/>
+<label for="notes">Notes:</label>
+<textarea name="notes">{{memb.notes}}</textarea><br/>
+
+<input type="submit" value="Update" />
+</form>
+
+<form method="get" action="/paper/{{memb.paper.pk}}/delete">
+<input type="hidden" name="back" value="{{back_url}}" />
+<input type="submit" value="Delete" />
+</form>

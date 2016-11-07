@@ -1,0 +1,9 @@
+{% if papers %}
+    <ul>
+    {% for paper in papers %}
+        <li><a href="/paper/{{ paper.id }}/">{{ paper.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No papers set up.</p>
+{% endif %}

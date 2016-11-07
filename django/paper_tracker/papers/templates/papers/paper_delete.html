@@ -1,0 +1,7 @@
+Are you sure?
+
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="back" value="{{back_url}}" />
+<input type="submit" value="Confirm delete" />
+</form>

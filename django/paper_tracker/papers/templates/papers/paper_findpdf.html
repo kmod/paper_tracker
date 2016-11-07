@@ -1,0 +1,12 @@
+<form method="post">
+{% csrf_token %}
+<label for="url">URL:</label><input type="text" name="url" id="urlentry" />
+<br/>
+<input type="submit" value="Set" />
+</form>
+
+<script type="text/javascript">
+window.open("https://scholar.google.com/scholar?hl=en&q={{ search_query }}").focus();
+document.getElementById("urlentry").focus();
+</script>
+
