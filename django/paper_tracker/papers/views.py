@@ -14,6 +14,7 @@ def cpaper(request, collection_id, paper_id):
         memb.paper.pdf_url = request.POST['pdf_url']
         memb.notes = request.POST['notes']
         memb.priority = int(request.POST['priority'])
+        memb.read = int(request.POST['read'])
         memb.save()
         memb.paper.save()
         return redirect(urllib.parse.unquote(request.GET['back']))
@@ -69,7 +70,7 @@ def collections_index(request):
 def collection(request, collection_id):
     c = get_object_or_404(Collection, pk=collection_id)
     def key(memb):
-        return (-memb.read / 30, -memb.priority, memb.paper.title)
+        return (memb.read / 30, -memb.priority, memb.paper.title)
     membs = sorted(c.collectionpapers_set.all(), key=key)
 
     context = {

@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" onsubmit="onSubmit()">
 {% csrf_token %}
 <label for="url">URL:</label><input type="text" name="url" id="urlentry" />
 <br/>
@@ -8,5 +8,10 @@
 <script type="text/javascript">
 window.open("https://scholar.google.com/scholar?hl=en&q={{ search_query }}").focus();
 document.getElementById("urlentry").focus();
+
+function onSubmit() {
+    window.open(document.getElementById("urlentry").value);
+    return false;
+}
 </script>
 
