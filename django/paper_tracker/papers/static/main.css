@@ -1,0 +1,15 @@
+table, th, td {
+   border: 1px solid black;
+}
+table {
+    border-collapse: collapse;
+}
+th {
+    height: 50px;
+}
+tr {
+    height: 30px;
+}
+td {
+    min-width: 50px;
+}

@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^papers$', views.papers_index, name='papers_index'),
-    url(r'^collections$', views.collections_index, name='collections_index'),
+    url(r'^$', views.collections_index, name='collections_index'),
     url(r'^collection/(?P<collection_id>[0-9]+)/$', views.collection, name='collection'),
     url(r'^paper/new$', views.paper_new, name='paper_new'),
     # url(r'^paper/(?P<paper_id>[0-9]+)$', views.paper, name='paper'),
