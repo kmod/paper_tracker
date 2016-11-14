@@ -70,7 +70,7 @@ def collections_index(request):
 def collection(request, collection_id):
     c = get_object_or_404(Collection, pk=collection_id)
     def key(memb):
-        return (memb.read / 30, -memb.priority, memb.paper.title)
+        return (memb.read // 30, -memb.priority, memb.paper.title)
     membs = sorted(c.collectionpapers_set.all(), key=key)
 
     context = {

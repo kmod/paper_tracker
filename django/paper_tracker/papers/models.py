@@ -6,7 +6,7 @@ class Paper(models.Model):
     pdf_url = models.TextField(default="", blank=True)
 
     def __str__(self):
-        return "Paper %d: %s" % (self.pk, self.title)
+        return "%s" % (self.title,)
 
 class Collection(models.Model):
     name = models.CharField(max_length=255)

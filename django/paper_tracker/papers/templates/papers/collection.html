@@ -2,6 +2,9 @@
 
 {{ collection }}
 
+<br/>
+<a href="/paper/new?add_to={{ collection.pk }}">Add new paper</a>
+
 {% if collection.papers.all %}
 <table>
     <tr>
@@ -35,5 +38,3 @@
 {% else %}
     <p>No papers added to this collection yet.</p>
 {% endif %}
-
-<a href="/paper/new?add_to={{ collection.pk }}">Add new paper</a>
