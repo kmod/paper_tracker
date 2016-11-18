@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Paper(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     pdf_url = models.TextField(default="", blank=True)
 
     def __str__(self):
@@ -21,5 +21,7 @@ class CollectionPapers(models.Model):
     collection = models.ForeignKey(Collection)
 
     priority = models.IntegerField(default=1)
-    read = models.IntegerField(default=0)
+    intro_conclusion_read = models.BooleanField(default=0)
+    refs_expanded = models.BooleanField(default=0)
+    paper_read = models.BooleanField(default=0)
     notes = models.TextField(default="", blank=True)

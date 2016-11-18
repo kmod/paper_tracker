@@ -14,7 +14,9 @@ def cpaper(request, collection_id, paper_id):
         memb.paper.pdf_url = request.POST['pdf_url']
         memb.notes = request.POST['notes']
         memb.priority = int(request.POST['priority'])
-        memb.read = int(request.POST['read'])
+        memb.intro_conclusion_read = request.POST.get('intro_conclusion_read', False)
+        memb.refs_expanded = request.POST.get('refs_expanded', False)
+        memb.paper_read = request.POST.get('paper_read', False)
         memb.save()
         memb.paper.save()
         return redirect(urllib.parse.unquote(request.GET['back']))
@@ -48,11 +50,14 @@ def paper_delete(request, paper_id):
 
 def paper_findpdf(request, paper_id):
     p = get_object_or_404(Paper, pk=paper_id)
+    cid = int(request.GET['cid'])
+
     if request.method == "POST":
         url = request.POST['url']
         p.pdf_url = url
         p.save()
-        return redirect(urllib.parse.unquote(request.GET['back']))
+
+        return redirect("/collection/%d/edit/%s?back=/collection/%d" % (cid, paper_id, cid))
 
     context = {
         'paper': p,
@@ -70,7 +75,8 @@ def collections_index(request):
 def collection(request, collection_id):
     c = get_object_or_404(Collection, pk=collection_id)
     def key(memb):
-        return (memb.read // 30, -memb.priority, memb.paper.title)
+        return (memb.paper_read and memb.refs_expanded, -memb.priority + (memb.refs_expanded or memb.paper_read),
+                memb.intro_conclusion_read, memb.paper.title)
     membs = sorted(c.collectionpapers_set.all(), key=key)
 
     context = {
@@ -83,13 +89,15 @@ def collection(request, collection_id):
 def paper_new(request):
     if request.method == "POST":
         assert request.POST["Title"]
-        p = Paper(title=request.POST['Title'])
-        p.priority = int(request.POST['Priority'])
+        try:
+            p = Paper.objects.get(title=request.POST['Title'])
+        except Paper.DoesNotExist:
+            p = Paper(title=request.POST['Title'])
         p.save()
 
         add_to = int(request.GET['add_to'])
         print(Collection.objects.get(pk=add_to).collectionpapers_set)
-        p.collectionpapers_set.create(collection_id=int(request.GET['add_to']))
+        p.collectionpapers_set.create(collection_id=int(request.GET['add_to']), priority=int(request.POST['Priority']))
         print(Collection.objects.get(pk=add_to).collectionpapers_set)
         p.save()
         print(Collection.objects.get(pk=add_to).collectionpapers_set)

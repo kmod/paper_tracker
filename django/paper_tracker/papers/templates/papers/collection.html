@@ -11,7 +11,9 @@
         <th>Paper</th>
         <th>PDF</th>
         <th>Priority</th>
-        <th>% Read</th>
+        <th>Intro read</th>
+        <th>Refs expanded</th>
+        <th>Whole paper read</th>
         <th></th>
         <th>Notes</th>
     </tr>
@@ -23,11 +25,16 @@
             {% if memb.paper.pdf_url %}
                 <a href="{{memb.paper.pdf_url}}">PDF</a>
             {% else %}
+            {% if 0 %}
             <a href="/paper/{{ memb.paper.pk }}/find_pdf?back={{ back_url }}">Find</a>
+            {% endif %}
+            <a href="/paper/{{ memb.paper.pk }}/find_pdf?cid={{collection.pk}}">Find</a>
             {% endif %}
         </td>
         <td>{{ memb.priority }} </td>
-        <td>{{ memb.read }} </td>
+        <td>{{ memb.intro_conclusion_read  | yesno:"X,"}} </td>
+        <td>{{ memb.refs_expanded | yesno:"X," }} </td>
+        <td>{{ memb.paper_read | yesno:"X," }} </td>
         <td>
             <a href="/collection/{{collection.pk}}/edit/{{memb.paper.pk}}?back={{ back_url }}">edit</a>
         </td>
