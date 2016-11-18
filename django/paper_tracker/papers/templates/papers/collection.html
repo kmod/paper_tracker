@@ -1,3 +1,10 @@
+<script type="text/javascript">
+function pdfOpen(el, url, cid, pid) {
+    window.open(url).focus();
+    window.location = "/collection/" + cid + "/edit/" + pid + "?back=/collection/" + cid + "/";
+}
+</script>
+
 <link rel="stylesheet"type="text/css" href="/static/main.css">
 
 {{ collection }}
@@ -23,12 +30,9 @@
         <td>{{ memb.paper.title }}</td>
         <td>
             {% if memb.paper.pdf_url %}
-                <a href="{{memb.paper.pdf_url}}">PDF</a>
+            <a href="{{memb.paper.pdf_url}}" onclick="pdfOpen(this, '{{memb.paper.pdf_url}}', {{collection.pk}}, {{memb.paper.pk}});return false" >PDF</a>
             {% else %}
-            {% if 0 %}
-            <a href="/paper/{{ memb.paper.pk }}/find_pdf?back={{ back_url }}">Find</a>
-            {% endif %}
-            <a href="/paper/{{ memb.paper.pk }}/find_pdf?cid={{collection.pk}}">Find</a>
+                <a href="/paper/{{ memb.paper.pk }}/find_pdf?cid={{collection.pk}}">Find</a>
             {% endif %}
         </td>
         <td>{{ memb.priority }} </td>
