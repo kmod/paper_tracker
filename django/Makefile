@@ -10,6 +10,7 @@ dump:
 
 
 paper_tracker/db_timestamp: db_dump.sql
+	false
 	if [ -f paper_tracker/db.sqlite3 ]; then mv paper_tracker/db.sqlite3 paper_tracker/db.sqlite3_backup; fi
 	sqlite3 paper_tracker/db.sqlite3 < db_dump.sql
 	touch paper_tracker/db_timestamp
