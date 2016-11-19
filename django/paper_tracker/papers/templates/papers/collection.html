@@ -21,6 +21,7 @@ function pdfOpen(el, url, cid, pid) {
         <th>Intro read</th>
         <th>Refs expanded</th>
         <th>Whole paper read</th>
+        <th>Publication</th>
         <th></th>
         <th>Notes</th>
     </tr>
@@ -39,6 +40,7 @@ function pdfOpen(el, url, cid, pid) {
         <td>{{ memb.intro_conclusion_read  | yesno:"X,"}} </td>
         <td>{{ memb.refs_expanded | yesno:"X," }} </td>
         <td>{{ memb.paper_read | yesno:"X," }} </td>
+        <td>{{ memb.paper.publication }} {{ memb.paper.year | default:"" }} </td>
         <td>
             <a href="/collection/{{collection.pk}}/edit/{{memb.paper.pk}}?back={{ back_url }}">edit</a>
         </td>

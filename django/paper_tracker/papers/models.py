@@ -4,6 +4,8 @@ from django.db import models
 class Paper(models.Model):
     title = models.CharField(max_length=255, unique=True)
     pdf_url = models.TextField(default="", blank=True)
+    year = models.IntegerField(default=0)
+    publication = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return "%s" % (self.title,)
@@ -25,3 +27,6 @@ class CollectionPapers(models.Model):
     refs_expanded = models.BooleanField(default=0)
     paper_read = models.BooleanField(default=0)
     notes = models.TextField(default="", blank=True)
+
+    class Meta(object):
+        unique_together = ('paper', 'collection')

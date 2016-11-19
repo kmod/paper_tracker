@@ -2,8 +2,6 @@ import urllib
 
 from django.shortcuts import render, get_object_or_404, redirect
 
-from django.http import HttpResponse
-
 from .models import Paper, Collection, CollectionPapers
 
 def cpaper(request, collection_id, paper_id):
@@ -12,6 +10,8 @@ def cpaper(request, collection_id, paper_id):
     if request.method == "POST":
         memb.paper.title = request.POST['title']
         memb.paper.pdf_url = request.POST['pdf_url']
+        memb.paper.year = int(request.POST['year'])
+        memb.paper.publication = request.POST['publication']
         memb.notes = request.POST['notes']
         memb.priority = int(request.POST['priority'])
         memb.intro_conclusion_read = request.POST.get('intro_conclusion_read', False)
@@ -90,9 +90,11 @@ def paper_new(request):
     if request.method == "POST":
         assert request.POST["Title"]
         try:
-            p = Paper.objects.get(title=request.POST['Title'])
+            p = Paper.objects.get(title=request.POST['Title'].strip())
         except Paper.DoesNotExist:
-            p = Paper(title=request.POST['Title'])
+            p = Paper(title=request.POST['Title'].strip())
+        p.year = int(request.POST['year'] or '0')
+        p.publication = request.POST['publication'].strip()
         p.save()
 
         add_to = int(request.GET['add_to'])
@@ -107,4 +109,3 @@ def paper_new(request):
     context = {
     }
     return render(request, "papers/paper_new.html", context)
-
