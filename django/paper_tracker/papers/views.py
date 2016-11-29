@@ -10,7 +10,7 @@ def cpaper(request, collection_id, paper_id):
     if request.method == "POST":
         memb.paper.title = request.POST['title']
         memb.paper.pdf_url = request.POST['pdf_url']
-        memb.paper.year = int(request.POST['year'])
+        memb.paper.year = int(request.POST['year'] or '0')
         memb.paper.publication = request.POST['publication']
         memb.notes = request.POST['notes']
         memb.priority = int(request.POST['priority'])
@@ -75,9 +75,9 @@ def collections_index(request):
 def collection(request, collection_id):
     c = get_object_or_404(Collection, pk=collection_id)
     def key(memb):
-        return (memb.paper_read and memb.refs_expanded, -memb.priority + (memb.refs_expanded or memb.paper_read),
+        return (memb.paper_read and memb.refs_expanded, -memb.priority, memb.refs_expanded or memb.paper_read,
                 memb.intro_conclusion_read, memb.paper.title)
-    membs = sorted(c.collectionpapers_set.all(), key=key)
+    membs = sorted(c.collectionpapers_set.select_related("paper").all(), key=key)
 
     context = {
         'collection': c,

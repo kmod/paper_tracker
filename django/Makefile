@@ -1,4 +1,4 @@
-RUN_DEPS := dev_env paper_tracker/db_timestamp
+RUN_DEPS := dev_env #paper_tracker/db_timestamp
 run: $(RUN_DEPS)
 	dev_env/bin/python paper_tracker/manage.py runserver
 
@@ -6,7 +6,8 @@ run: $(RUN_DEPS)
 # dump: db_dump.sql
 # db_dump.sql: paper_tracker/db.sqlite3
 dump:
-	sqlite3 paper_tracker/db.sqlite3 ".output db_dump.sql" ".dump"
+	# sqlite3 paper_tracker/db.sqlite3 ".output db_dump.sql" ".dump"
+	sqlite3 paper_tracker/db.sqlite3 ".dump" >> ../db_dump.sql
 
 
 paper_tracker/db_timestamp: db_dump.sql
